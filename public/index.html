@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Asili · Delivery operations</title>
+    <link rel="stylesheet" href="/vendor/leaflet/leaflet.css" />
+    <link rel="stylesheet" href="/style.css" />
+    <script defer src="/vendor/leaflet/leaflet.js"></script>
+    <script defer src="/app.js"></script>
+  </head>
+  <body>
+    <aside>
+      <a class="brand" href="/"
+        >a<span>asili<span class="muted">logistics</span></span></a
+      >
+      <div class="eyebrow">OPERATIONS WORKSPACE</div>
+      <nav><a href="/">◈ &nbsp; Deliveries</a></nav>
+      <div class="aside-bottom">
+        Built for the last mile.<br /><small>Kigali · Rwanda</small>
+      </div>
+    </aside>
+    <main>
+      <header>
+        <div>
+          <div class="eyebrow">ASILI DELIVERY NETWORK</div>
+          <h1 id="heading">Every delivery, connected.</h1>
+          <p id="subtitle">From the first pickup to the final doorstep.</p>
+        </div>
+        <button id="login" class="secondary">Dispatcher key</button>
+      </header>
+      <div id="notice" role="status"></div>
+      <div id="stats" class="stats"></div>
+      <div class="workspace">
+        <section class="panel">
+          <div class="panel-title">
+            <h2 id="list-title">Delivery board</h2>
+            <button id="new">+ New delivery</button>
+          </div>
+          <input
+            id="search"
+            placeholder="Search deliveries, customers or riders"
+            aria-label="Search deliveries"
+          />
+          <div id="list"></div>
+        </section>
+        <section class="panel map-panel">
+          <div class="panel-title">
+            <h2>Live delivery view</h2>
+            <span class="pill">● Auto refresh · 5s</span>
+          </div>
+          <div id="map"></div>
+          <div id="details" class="details">
+            <h2>A clear view of every journey</h2>
+            <p>
+              Select a delivery to see its route, rider location and progress.
+            </p>
+          </div>
+        </section>
+      </div>
+      <section id="outbox" class="panel">
+        <div class="panel-title">
+          <h2>WhatsApp updates</h2>
+          <span class="pill">Review & send</span>
+        </div>
+        <p>
+          Status updates are queued for sender and customer. Demo messages stay
+          here until WhatsApp is connected.
+        </p>
+        <div id="messages"></div>
+      </section>
+      <footer>ASILI LOGISTICS <span>Pickup. Move. Deliver.</span></footer>
+    </main>
+    <dialog id="dialog">
+      <form id="create">
+        <div class="panel-title">
+          <h2>Create a delivery</h2>
+          <button type="button" id="close" class="secondary">Close</button>
+        </div>
+        <div class="form-grid">
+          <label>Sender name<input name="senderName" required /></label
+          ><label
+            >Sender WhatsApp<input
+              name="senderPhone"
+              placeholder="+250…"
+              required /></label
+          ><label>Customer name<input name="customerName" required /></label
+          ><label
+            >Customer WhatsApp<input
+              name="customerPhone"
+              placeholder="+250…"
+              required /></label
+          ><label>Rider name<input name="riderName" required /></label
+          ><label
+            >Rider phone<input name="riderPhone" placeholder="+250…" required
+          /></label>
+        </div>
+        <label>Parcel description<input name="description" required /></label>
+        <div class="form-grid">
+          <fieldset>
+            <legend>Pickup</legend>
+            <label
+              >Address / landmark<input name="pickupLabel" required /></label
+            ><label
+              >Latitude<input
+                name="pickupLat"
+                type="number"
+                step="any"
+                min="-90"
+                max="90"
+                required /></label
+            ><label
+              >Longitude<input
+                name="pickupLng"
+                type="number"
+                step="any"
+                min="-180"
+                max="180"
+                required
+            /></label>
+          </fieldset>
+          <fieldset>
+            <legend>Destination</legend>
+            <label
+              >Address / landmark<input name="dropoffLabel" required /></label
+            ><label
+              >Latitude<input
+                name="dropoffLat"
+                type="number"
+                step="any"
+                min="-90"
+                max="90"
+                required /></label
+            ><label
+              >Longitude<input
+                name="dropoffLng"
+                type="number"
+                step="any"
+                min="-180"
+                max="180"
+                required
+            /></label>
+          </fieldset>
+        </div>
+        <p class="muted">
+          Use exact coordinates from your map app. International phone format
+          required. Obtain permission for WhatsApp updates and location sharing.
+        </p>
+        <div id="form-error" role="alert"></div>
+        <button>Create & assign rider</button>
+      </form>
+    </dialog>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "asililogistics",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env server.js",
+    "dev": "node --watch --env-file-if-exists=.env server.js",
+    "test": "node --test",
+    "setup:secrets": "node scripts/setup-secrets.mjs",
+    "verify:live": "node --env-file-if-exists=.env scripts/verify-live.mjs"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "leaflet": "^1.9.4"
+  }
+}

@@ -1,0 +1,7 @@
+{$ASILI_DOMAIN} {
+    tls {$TLS_EMAIL}
+    encode zstd gzip
+    header Strict-Transport-Security "max-age=31536000"
+    reverse_proxy app:3000
+    # Access logging intentionally disabled: private links contain bearer tokens.
+}

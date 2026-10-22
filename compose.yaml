@@ -1,0 +1,40 @@
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    init: true
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PUBLIC_BASE_URL: https://${ASILI_DOMAIN:?Set ASILI_DOMAIN to your public hostname}
+      ADMIN_KEY: ${ADMIN_KEY:?Run npm run setup:secrets first}
+      WHATSAPP_VERIFY_TOKEN: ${WHATSAPP_VERIFY_TOKEN:?Run npm run setup:secrets first}
+      WHATSAPP_ACCESS_TOKEN: ${WHATSAPP_ACCESS_TOKEN:-}
+      WHATSAPP_PHONE_NUMBER_ID: ${WHATSAPP_PHONE_NUMBER_ID:-}
+      WHATSAPP_APP_SECRET: ${WHATSAPP_APP_SECRET:-}
+      WHATSAPP_TEMPLATE_NAME: ${WHATSAPP_TEMPLATE_NAME:-}
+      WHATSAPP_TEMPLATE_LANGUAGE: ${WHATSAPP_TEMPLATE_LANGUAGE:-en}
+      WHATSAPP_API_VERSION: ${WHATSAPP_API_VERSION:-v23.0}
+    volumes:
+      - delivery-data:/app/data
+  https:
+    image: caddy:2.10-alpine
+    restart: unless-stopped
+    environment:
+      ASILI_DOMAIN: ${ASILI_DOMAIN:?Set ASILI_DOMAIN to your public hostname}
+      TLS_EMAIL: ${TLS_EMAIL:?Set TLS_EMAIL for certificate expiry notices}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      app:
+        condition: service_healthy
+volumes:
+  delivery-data:
+  caddy-data:
+  caddy-config:

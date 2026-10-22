@@ -1,0 +1,41 @@
+# Creates a paid single-instance service with persistent SQLite storage.
+# Review Render pricing and connect your own account before applying.
+services:
+  - type: web
+    name: asililogistics
+    runtime: node
+    plan: starter
+    region: frankfurt
+    numInstances: 1
+    buildCommand: npm ci --no-audit --no-fund && npm test
+    startCommand: npm start
+    healthCheckPath: /api/health
+    disk:
+      name: asili-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_VERSION
+        value: 24.19.0
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: DB_PATH
+        value: /var/data/asili.sqlite
+      - key: ADMIN_KEY
+        generateValue: true
+      - key: WHATSAPP_VERIFY_TOKEN
+        generateValue: true
+      - key: WHATSAPP_ACCESS_TOKEN
+        sync: false
+      - key: WHATSAPP_PHONE_NUMBER_ID
+        sync: false
+      - key: WHATSAPP_APP_SECRET
+        sync: false
+      - key: WHATSAPP_TEMPLATE_NAME
+        sync: false
+      - key: WHATSAPP_TEMPLATE_LANGUAGE
+        value: en
+      - key: WHATSAPP_API_VERSION
+        value: v23.0
